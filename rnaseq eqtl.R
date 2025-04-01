@@ -8,10 +8,6 @@ install.packages("MatrixEQTL")
 install.packages("vcfR")
 
 
-
-expression_data <- read.table("Q:/Stagiairs/Bashir Hussein.W/Data/salmon.merged.gene_counts_scaled.tsv", header = TRUE, row.names = 1)
-
-# Load necessary libraries
 if (!requireNamespace("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
 BiocManager::install("VariantAnnotation")
@@ -45,11 +41,11 @@ vcf_lines <- readLines("common_all_20180418.vcf", n = 20)
 print(vcf_lines)
 
 
-# Ensure the VCF file ends with a newline
+
 system("echo >> common_all_20180418.vcf")
 
-# Read the VCF file, skipping lines until the header is found
-vcf <- fread("common_all_20180418.vcf", skip = "#CHROM")
+# Read the VCF file
+vcf <- fread("common_all_20180418.vcf", skip = "#CHROM", nrows = 1000)
 
 # Save genotype data to a text file
 write.table(vcf, file = "genotype_data.txt", sep = "\t", quote = FALSE, col.names = TRUE)
@@ -58,6 +54,16 @@ write.table(vcf, file = "genotype_data.txt", sep = "\t", quote = FALSE, col.name
 genotype_data <- read.table("genotype_data.txt", header = TRUE, row.names = 1)
 head(genotype_data)
 
+# Check for missing values
+sum(is.na(genotype_data))
+
+
+
+# loading the normalised rnaseqdata
+expression_data <- read.table("Q:/Stagiairs/Bashir Hussein.W/Data/salmon.merged.gene_counts_scaled.tsv", header = TRUE, row.names = 1)
+
+
+all(rownames(genotype_data) %in% rownames(expression_data))
 
 
 
@@ -65,69 +71,12 @@ head(genotype_data)
 
 
 
+# Inspect the row names of genotype data
+head(rownames(genotype_data))
+
+# Inspect the row names of expression data
+head(rownames(expression_data))
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Read the VCF file, skipping lines until the header is found
-vcf <- fread("common_all_20180418.vcf", skip = "#CHROM")
-
-# Save genotype data to a text file
-write.table(vcf, file = "genotype_data.txt", sep = "\t", quote = FALSE, col.names = NA)
-
-# Ensure the VCF file ends with a newline
-system("echo >> common_all_20180418.vcf")
-
-# Read the VCF file, skipping lines until the header is found
-vcf <- fread("common_all_20180418.vcf", skip = "#CHROM")
-
-# Save genotype data to a text file
-write.table(vcf, file = "genotype_data.txt", sep = "\t", quote = FALSE, col.names = TRUE)
-
-# Verify the saved genotype data
-genotype_data <- read.table("genotype_data.txt", header = TRUE, row.names = 1)
-head(genotype_data)
-
-
-
-
-
-
-## eqtl 
-
-library(MatrixEQTL)
-
-
-
-
-
-# Define model
-model <- Matrix_eQTL_main(
-  snps = SlicedData$new(genotype_data.txt),
-  gene = SlicedData$new(expression_data),
-  output_file_name = "eQTL_results.txt",
-  pvOutputThreshold = 1e-5,
-  useModel = modelLINEAR,
-  errorCovariance = numeric(),
-  verbose = TRUE
-)
-
-# View results
-print(model$all$eqtls)
 
 
