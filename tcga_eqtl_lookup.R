@@ -3,7 +3,7 @@
 library(data.table)
 
 # Load the metaGWAS data
-metaGWAS_file_path <- "Z:/genepi/Bashir_Hussein/metaGWAS_outputbestand/MA_STDERR_gwas_prognose_update_maf005_r208_recur_1.tbl"
+metaGWAS_file_path <- "path/to/your/file"
 metaGWAS_data <- fread(metaGWAS_file_path, sep = "\t", header = TRUE)
 
 # Extract chromosome and position from MarkerName column
@@ -17,7 +17,7 @@ library(dplyr)
 # filter(`P-value`< 0.10)
 
 # Load the TCGA data
-tcga_file_path <- "Q:/Stagiairs/Bashir Hussein.W/Data/TCGA/BLCA.cis.susie.txt.txt"
+tcga_file_path <- "path/to/your/file"
 tcga_eqtl <- fread(tcga_file_path, sep = "\t", header = TRUE)
 
 # Ensure both columns are of the same type
