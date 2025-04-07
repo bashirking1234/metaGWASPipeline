@@ -4,7 +4,7 @@ library(data.table)
 
 
 # Load the metaGWAS data
-metaGWAS_file_path <- "Z:/genepi/Bashir_Hussein/metaGWAS_outputbestand/MA_STDERR_gwas_prognose_update_maf005_r208_recur_1.tbl"
+metaGWAS_file_path <- "path/to/your/file"
 metaGWAS_data <- fread(metaGWAS_file_path, sep = "\t", header = TRUE)
 
 # Filtering on the metaGWAS data
@@ -18,20 +18,10 @@ metaGWAS_data[, c("Chr", "Position") := tstrsplit(MarkerName, "[:]", keep = c(1,
 metaGWAS_data[, Chr := sub("chr", "", Chr)]
 metaGWAS_data[, Position := as.integer(Position)]
 
-
-# Load the metaGWAS data
-metaGWAS_file_path <- "Z:/genepi/Bashir_Hussein/metaGWAS_outputbestand/MA_STDERR_gwas_prognose_update_maf005_r208_recur_1_head1000.out"
-metaGWAS_data <- fread(metaGWAS_file_path, sep = "\t", header = TRUE)
-
-# Extract chromosome and position from MarkerName column
-metaGWAS_data[, c("Chr", "Position") := tstrsplit(MarkerName, "[:]", keep = c(1, 2))]
-metaGWAS_data[, Chr := sub("chr", "", Chr)]
-metaGWAS_data[, Position := as.integer(Position)]
-
 # Load the GTEx data
-tar_file <- "Q:/Stagiairs/Bashir Hussein.W/Data/GTEx/GTEx_Analysis_v10_eQTL (1).tar"
-untar(tar_file, exdir = "Q:/Stagiairs/Bashir Hussein.W/Data/GTEx/GTEx_Analysis_v10_eQTL_updated")
-bladder_eqtl_file <- "Q:/Stagiairs/Bashir Hussein.W/Data/GTEx/GTEx_Analysis_v10_eQTL_updated/GTEx_Analysis_v10_eQTL_updated/Bladder.v10.eGenes.txt.gz"
+tar_file <- "path/to/your/file"
+untar(tar_file, exdir = "path/to/your/exit/directory"
+bladder_eqtl_file <- "path/to/your/gtexfile"
 gtex_eqtl <- fread(file = bladder_eqtl_file)
 
 # Extract chromosome and position from variant_id column
