@@ -7,7 +7,7 @@
 
 echo "Starting script..."
 
-# Activate existing Conda environment
+# Activate Conda environment
 source ~/miniconda3/bin/activate
 conda activate tensorqtl_env || { echo "Failed to activate Conda environment"; exit 1; }
 echo "Conda environment activated."
