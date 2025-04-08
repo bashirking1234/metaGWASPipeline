@@ -13,7 +13,7 @@ library(dplyr)
 # filter(`P-value`< 0.10)
 
 
-# Extract chromosome and position from MarkerName column
+# Extract the chromosome and position from MarkerName column
 metaGWAS_data[, c("Chr", "Position") := tstrsplit(MarkerName, "[:]", keep = c(1, 2))]
 metaGWAS_data[, Chr := sub("chr", "", Chr)]
 metaGWAS_data[, Position := as.integer(Position)]
@@ -24,7 +24,7 @@ untar(tar_file, exdir = "path/to/your/exit/directory"
 bladder_eqtl_file <- "path/to/your/gtexfile"
 gtex_eqtl <- fread(file = bladder_eqtl_file)
 
-# Extract chromosome and position from variant_id column
+# Extract chromosome and position from variant_id column in the GTEx data
 gtex_eqtl[, c("Chr", "Position") := tstrsplit(variant_id, "_", keep = c(1, 2))]
 gtex_eqtl[, Chr := sub("chr", "", Chr)]
 gtex_eqtl[, Position := as.integer(Position)]
@@ -33,12 +33,6 @@ gtex_eqtl[, Position := as.integer(Position)]
 # Ensure both columns are of the same type
 metaGWAS_data[, Chr := as.character(Chr)]
 gtex_eqtl[, Chr := as.character(Chr)]
-
-# Check for unique values in Chr and Position columns
-print("Unique values in metaGWAS_data:")
-print(unique(metaGWAS_data[, .(Chr, Position)]))
-print("Unique values in gtex_eqtl:")
-print(unique(gtex_eqtl[, .(Chr, Position)]))
 
 # Check for common values between the datasets
 common_values <- merge(metaGWAS_data[, .(Chr, Position)], gtex_eqtl[, .(Chr, Position)], by = c("Chr", "Position"))
