@@ -24,12 +24,6 @@ tcga_eqtl <- fread(tcga_file_path, sep = "\t", header = TRUE)
 metaGWAS_data[, Chr := as.character(Chr)]
 tcga_eqtl[, Chr := as.character(Chr)]
 
-# Check for unique values in Chr and Position columns
-print("Unique values in metaGWAS_data:")
-print(unique(metaGWAS_data[, .(Chr, Position)]))
-print("Unique values in tcga_eqtl:")
-print(unique(tcga_eqtl[, .(Chr, Position)]))
-
 # Check for common values between the datasets
 common_values <- merge(metaGWAS_data[, .(Chr, Position)], tcga_eqtl[, .(Chr, Position)], by = c("Chr", "Position"))
 print("Common values between metaGWAS_data and tcga_eqtl:")
